@@ -20,6 +20,9 @@ const TopmenuWrapper = styled.div`
         color: #E8E8E8;
         width: 100%;
     }
+    .topmenu>div>div>a:hover{
+        color: #4169E1 !important;
+    }
 `
 
 const Topmenu = (props) => {
@@ -28,16 +31,16 @@ const Topmenu = (props) => {
             <div className="topmenu">
                 <div>
                     <div>
-                        <a href='/'>메인</a>
+                        <a style={{color: 'Main' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/'>메인</a>
                     </div>
                     <div>
-                        <a href='/history'>경기 기록</a>
+                        <a style={{color: 'History' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/history'>경기 기록</a>
                     </div>
                     <div>
-                        <a href='/rank'>순위</a>
+                        <a style={{color: 'Rank' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/rank'>순위</a>
                     </div>
                     <div>
-                        <a href='/info'>팀별 정보</a>
+                        <a style={{color: 'Info' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/info'>팀별 정보</a>
                     </div>
                 </div>
             </div>

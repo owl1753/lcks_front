@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Topmenu from '../components/Topmenu';
 
 const MainWrapper = styled.div`
   .Main {
@@ -66,11 +67,14 @@ const MainWrapper = styled.div`
 
 const Main = () => {
   return (
-    <MainWrapper>
-      <div className="Main">
-        <span>LCKS</span>
-      </div>
-    </MainWrapper>  
+    <>
+      <Topmenu nowPage='Main'/>
+      <MainWrapper>
+        <div className="Main">
+          <span>LCKS</span>
+        </div>
+      </MainWrapper>  
+    </>
   )
 }
 

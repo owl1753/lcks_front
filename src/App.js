@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Main from './Main';
-import History from './History';
-import Rank from './Rank';
-import Info from './Info';
+import Main from './pages/Main'
+import History from './pages/History';
+import Rank from './pages/Rank';
+import Info from './pages/Info';
 import { Route, Routes } from 'react-router-dom'
 import axios from 'axios';
-import Topmenu from './Topmenu';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -77,7 +76,6 @@ function App() {
   return (
     <div className="App">
       <GlobalStyle />
-      <Topmenu />
       <Routes>
         <Route path='' element={<Main />} />
         <Route path='/history' element={<History matches={ state.matches } teams={ state.teams } />} />

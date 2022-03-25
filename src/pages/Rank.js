@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
+import Topmenu from '../components/Topmenu';
 
 const RankWrapper = styled.div`
     .Rank {
@@ -82,49 +83,52 @@ const Rank = (props) => {
   }, [props])
 
   return (
-    <RankWrapper>
-      <div className="Rank">
-        <div id="first">
-          <div className="Team_Rank"></div>
-          <div className="Team_Logo"></div>
-          <div>
+    <>
+      <Topmenu nowPage='Rank'/>
+      <RankWrapper>
+        <div className="Rank">
+          <div id="first">
+            <div className="Team_Rank"></div>
+            <div className="Team_Logo"></div>
             <div>
-              <div>팀 이름</div>
-              <div>승</div>
-              <div>패</div>
-              <div>승점</div>
-            </div>
-            <div></div>
-          </div>        
-        </div>
-      </div>
-      {
-        state.teams.map((team) => {
-          return (
-            <>
-              <div className="Rank">
-                <div>
-                  <div className="Team_Rank">{ team.rank }</div>
-                  <img className="Team_Logo" src={ team.logo_url } alt={ team.name }/>
-                  <div>
-                    <div>
-                      <div>{ team.name }</div>     
-                      <div>{ team.win }</div>
-                      <div>{ team.defeat }</div>
-                        <div>
-                          { Plus(team.v_point) }
-                          { team.v_point }
-                        </div>
-                      </div>
-                  </div>  
-                </div>
+              <div>
+                <div>팀 이름</div>
+                <div>승</div>
+                <div>패</div>
+                <div>승점</div>
               </div>
-              <hr />
-            </>
-          );
-        })
-      }
-    </RankWrapper>
+              <div></div>
+            </div>        
+          </div>
+        </div>
+        {
+          state.teams.map((team) => {
+            return (
+              <>
+                <div className="Rank">
+                  <div>
+                    <div className="Team_Rank">{ team.rank }</div>
+                    <img className="Team_Logo" src={ '' } alt={ team.name }/>
+                    <div>
+                      <div>
+                        <div>{ team.name }</div>     
+                        <div>{ team.win }</div>
+                        <div>{ team.defeat }</div>
+                          <div>
+                            { Plus(team.v_point) }
+                            { team.v_point }
+                          </div>
+                        </div>
+                    </div>  
+                  </div>
+                </div>
+                <hr />
+              </>
+            );
+          })
+        }
+      </RankWrapper>
+    </>
   )
 }
 
