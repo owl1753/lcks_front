@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
+import { getImage } from '../App';
 import Topmenu from '../components/Topmenu';
 
 const RankWrapper = styled.div`
@@ -59,9 +60,7 @@ const Rank = (props) => {
     }
   };
 
-  const [state, setState] = useState({
-    teams: [],
-  });
+  const [teams, setTeams] = useState([]);
 
   const compareByRank = () => {
     return (a, b) => {
@@ -77,9 +76,7 @@ const Rank = (props) => {
   useEffect(() => {
     let arrayCopy = [...props.teams];
     arrayCopy.sort(compareByRank());
-    setState({
-      teams: arrayCopy,
-    });
+    setTeams(arrayCopy);
   }, [props])
 
   return (
@@ -102,13 +99,13 @@ const Rank = (props) => {
           </div>
         </div>
         {
-          state.teams.map((team) => {
+          teams.map((team) => {
             return (
               <>
                 <div className="Rank">
                   <div>
                     <div className="Team_Rank">{ team.rank }</div>
-                    <img className="Team_Logo" src={ '' } alt={ team.name }/>
+                    <img className="Team_Logo" src={ getImage(team.name) } alt={ team.name }/>
                     <div>
                       <div>
                         <div>{ team.name }</div>     

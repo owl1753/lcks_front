@@ -34,9 +34,7 @@ const InfoWrapper = styled.div`
 `
 
 const Info = (props) => {
-    const [state, setState] = useState({
-        nowTeam: {},
-    });
+    const [nowTeam, setNowTeam] = useState({});
 
     useEffect(() => {
         if (typeof props.teams === 'undefined' || props.teams === null){
@@ -46,10 +44,7 @@ const Info = (props) => {
             return;
         }
         const team = props.teams[0];
-        setState({
-            nowTeam: team,
-        });
-
+        setNowTeam(team);
       }, [props])
 
     return (
@@ -61,11 +56,9 @@ const Info = (props) => {
                         props.teams.map((team) => {
                             return (
                                 <div>
-                                    <div style={{color: team.name === state.nowTeam.name ? '#4169E1' : '#E8E8E8'}} 
+                                    <div style={{color: team.name === nowTeam.name ? '#4169E1' : '#E8E8E8'}} 
                                     onClick={() => {
-                                        setState({
-                                            nowTeam: team,
-                                        });
+                                        setNowTeam(team);
                                     }}>
                                         { team.name }
                                     </div>
@@ -76,7 +69,7 @@ const Info = (props) => {
                     }   
                 </div>
             </InfoWrapper>
-            <InfoContents team={ state.nowTeam }/>
+            <InfoContents team={ nowTeam }/>
         </>
     )
 }

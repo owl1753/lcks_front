@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getImage } from '../App';
 import Topmenu from '../components/Topmenu';
 
 const HistoryWrapper = styled.div`
@@ -48,7 +49,7 @@ const HistoryWrapper = styled.div`
         margin-bottom: 10px;
     }
     .Match_Team {
-        width: 30%;
+        width: 40%;
         padding-right: 20px;
         padding-left: 20px;
     }
@@ -116,13 +117,9 @@ const HistoryWrapper = styled.div`
 `
 
 const History = (props) => {
-    const [state, setState] = useState(
-        {
-            years: ['2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012'],
-            nowYear: '2022',
-            matches: [],
-        }
-    );
+    const [years, setYears] = useState(['2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012']);
+    const [nowYear, setNowYear] = useState('2022');
+    const [matches, setMatches] = useState([]);
 
     useEffect(() => { 
         if (typeof props.matches === 'undefined' || props.matches === null){
@@ -133,16 +130,12 @@ const History = (props) => {
         }
         const array = [];
         for (let i = 0; i < props.matches.length; i++){
-            if (props.matches[i].match_date.substr(0, 4) === state.nowYear){
+            if (props.matches[i].match_date.substr(0, 4) === nowYear){
                 array.push(props.matches[i]);
             }
         }
-        setState({
-            years: [...state.years],
-            nowYear: state.nowYear,
-            matches: [...array],
-        });
-    }, [props, state.nowYear])
+        setMatches(array);
+    }, [props, nowYear])
 
     return (
         <>
@@ -150,16 +143,12 @@ const History = (props) => {
             <HistoryWrapper>
                 <div className='SelectYear'>
                     {
-                        state.years.map((year) => {
+                        years.map((year) => {
                             return (
                                 <div>
-                                    <div style={{color: year === state.nowYear ? '#4169E1' : '#E8E8E8'}} 
-                                    onClick={() => {                   
-                                        setState({
-                                            years: [...state.years],
-                                            nowYear: year,
-                                            matches: [], 
-                                        });
+                                    <div style={{color: year === nowYear ? '#4169E1' : '#E8E8E8'}} 
+                                    onClick={() => {     
+                                        setNowYear(year);          
                                     }}>
                                         { year }
                                     </div>
@@ -171,7 +160,7 @@ const History = (props) => {
                 </div>
                 
                 {
-                    state.matches.map((match) => {
+                    matches.map((match) => {
                         return (
                             <>
                             <div className="Match">
@@ -180,14 +169,14 @@ const History = (props) => {
                                     <div className="Match_Score">{ match.team_1_score }</div>
                                         <div className="Match_Team">
                                             <div>{ match.team_1_name }</div>
-                                            <img src={ '' } alt={ match.team_1_name } />
+                                            <img src={ getImage(match.team_1_name) } alt={ match.team_1_name } />
                                         </div>
                                         <div>
                                             <div className="Match_VS">vs</div>
                                         </div>
                                         <div className="Match_Team">
                                             <div>{ match.team_2_name }</div>
-                                            <img src={ '' } alt={ match.team_2_name } />
+                                            <img src={ getImage(match.team_2_name) } alt={ match.team_2_name } />
                                         </div>
                                     <div className="Match_Score">{ match.team_2_score }</div>
                                 </div>

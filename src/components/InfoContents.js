@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { getImage } from "../App";
 
 const InfoContentsWrapper = styled.div`
     &>div{
@@ -37,7 +38,7 @@ const InfoContents = (props) => {
         <InfoContentsWrapper>
             <div>
                 <div className="Info_Left">
-                    <img src={ '' } alt={ props.team.name }/>
+                    <img src={ getImage(props.team.name) } alt={ props.team.name }/>
                     <div>{ props.team.name }</div>
                 </div>
                 <div className="Info_Right">
