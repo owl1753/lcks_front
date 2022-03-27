@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getImage } from "../App";
 
@@ -33,12 +33,17 @@ const InfoContentsWrapper = styled.div`
     }
 `
 
+
+
 const InfoContents = (props) => {
+
+    const [loaded, setLoad] = useState(false);
+
     return (
         <InfoContentsWrapper>
             <div>
                 <div className="Info_Left">
-                    <img src={ getImage(props.team.name) } alt={ props.team.name }/>
+                    <img style={ loaded ? {} : { visibility: 'hidden' }} onLoad={ () => setLoad(true) } src={ getImage(props.team.name) } alt={ props.team.name }/>
                     <div>{ props.team.name }</div>
                 </div>
                 <div className="Info_Right">
