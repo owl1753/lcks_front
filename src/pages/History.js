@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getImage } from '../App';
-import Topmenu from '../components/Topmenu';
 
 const HistoryWrapper = styled.div`
+    & {
+        padding-top: 80px;
+    }
     .Match {
         display: flex;
         flex-direction: column;
@@ -30,13 +32,19 @@ const HistoryWrapper = styled.div`
         align-items: center;
         justify-content: center;
     }
-    .Match>div>div>img {
+    .Match>div>div:not(:nth-child(3))>div:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+    }
+    .Match>div>div>div>img {
         width: 80px;
-        height: 80px;
     }
     .Match_VS {
         display: flex;
-        width: 10%;
+        width: 5%;
         margin-left: 20px;
         margin-right: 20px;
         justify-content: center;
@@ -49,7 +57,7 @@ const HistoryWrapper = styled.div`
         margin-bottom: 10px;
     }
     .Match_Team {
-        width: 40%;
+        width: 60%;
         padding-right: 20px;
         padding-left: 20px;
     }
@@ -139,7 +147,6 @@ const History = (props) => {
 
     return (
         <>
-            <Topmenu nowPage='History'/>
             <HistoryWrapper>
                 <div className='SelectYear'>
                     {
@@ -169,14 +176,19 @@ const History = (props) => {
                                     <div className="Match_Score">{ match.team_1_score }</div>
                                         <div className="Match_Team">
                                             <div>{ match.team_1_name }</div>
-                                            <img src={ getImage(match.team_1_name) } alt={ match.team_1_name } />
+                                            <div>
+                                                <img src={ getImage(match.team_1_name) } alt={ match.team_1_name } />
+                                            </div>
+                                            
                                         </div>
                                         <div>
                                             <div className="Match_VS">vs</div>
                                         </div>
                                         <div className="Match_Team">
                                             <div>{ match.team_2_name }</div>
-                                            <img src={ getImage(match.team_2_name) } alt={ match.team_2_name } />
+                                            <div>
+                                                <img src={ getImage(match.team_2_name) } alt={ match.team_2_name } />
+                                            </div>
                                         </div>
                                     <div className="Match_Score">{ match.team_2_score }</div>
                                 </div>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InfoContents from '../components/InfoContents';
-import Topmenu from '../components/Topmenu';
 
 const InfoWrapper = styled.div`
+    & {
+        padding-top: 80px;
+    }
     .SelectTeam{
         display: flex;
         font-size: 14px;
@@ -49,7 +51,6 @@ const Info = (props) => {
 
     return (
         <>
-            <Topmenu nowPage='Info'/>
             <InfoWrapper>
                 <div className='SelectTeam'>
                     {

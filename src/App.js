@@ -3,6 +3,7 @@ import Main from './pages/Main'
 import History from './pages/History';
 import Rank from './pages/Rank';
 import Info from './pages/Info';
+import Login from './pages/Login';
 import { Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
@@ -63,6 +64,7 @@ import incredible_miracle_2 from './assets/incredible_miracle_2.png';
 import bigfile_miracle from './assets/bigfile_miracle.png';
 import midas_fio from './assets/midas_fio.png';
 import prime_optimus from './assets/prime_optimus.png';
+import Topmenu from './components/Topmenu';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -129,10 +131,13 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <Routes>
-        <Route path='' element={<Main />} />
-        <Route path='/history' element={<History matches={ matches } teams={ teams }/>} />
-        <Route path='/rank' element={<Rank teams={ teams }/>} />
-        <Route path='/info' element={<Info teams={ teams }/>} />
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/*" element={<Topmenu />}>
+          <Route path='' element={<Main />} />
+          <Route path='history' element={<History matches={ matches } teams={ teams }/>} />
+          <Route path='rank' element={<Rank teams={ teams }/>} />
+          <Route path='info' element={<Info teams={ teams }/>} />
+        </Route>
       </Routes>
     </div>
   );

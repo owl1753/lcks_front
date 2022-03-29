@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Outlet, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
 const TopmenuWrapper = styled.div`
     .topmenu{
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
         height: 80px;
         background-color: #0D0D0D;
     }
@@ -13,7 +21,7 @@ const TopmenuWrapper = styled.div`
     .topmenu>div>div{
         width: 100px;
     }
-    .topmenu>div>div>a{
+    .Link{
         display: flex;
         justify-content: center;
         line-height: 86px;
@@ -26,25 +34,36 @@ const TopmenuWrapper = styled.div`
 `
 
 const Topmenu = (props) => {
+    const nowPage = useLocation();
+
     return (
-        <TopmenuWrapper>
-            <div className="topmenu">
-                <div>
+        <>
+            <TopmenuWrapper>
+                <div className="topmenu">
                     <div>
-                        <a style={{color: 'Main' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/'>메인</a>
+                        <div>
+                            <Link to="/" className="Link" style={{color: '/' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>메인</Link>
+                        </div>
+                        <div>
+                            <Link to="/history" className="Link"  style={{color: '/history' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>경기 기록</Link>
+                        </div>
+                        <div>
+                            <Link to="/rank" className="Link"  style={{color: '/rank' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>순위</Link>
+                        </div>
+                        <div>
+                            <Link to="/info" className="Link"  style={{color: '/info' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>팀별 정보</Link>
+                        </div>
                     </div>
                     <div>
-                        <a style={{color: 'History' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/history'>경기 기록</a>
-                    </div>
-                    <div>
-                        <a style={{color: 'Rank' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/rank'>순위</a>
-                    </div>
-                    <div>
-                        <a style={{color: 'Info' === props.nowPage ? '#4169E1' : '#E8E8E8'}} href='/info'>팀별 정보</a>
+                        <div>
+                            <Link to="/login" className="Link">로그인</Link>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </TopmenuWrapper>
+            </TopmenuWrapper>
+            <Outlet />
+        </>
+        
     )
 }
 

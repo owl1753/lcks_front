@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { getImage } from '../App';
-import Topmenu from '../components/Topmenu';
 
 const RankWrapper = styled.div`
+    & {
+        padding-top: 80px;
+    }
+
     .Rank {
       display: flex;
       justify-content: center;
@@ -16,11 +19,21 @@ const RankWrapper = styled.div`
       margin-bottom: 40px;
       width: 1200px;
     }
-    .Rank>div>.Team_Logo {
+    .Team_Logo {
       width: 60px;
-      height: 60px;
-      min-width: 60px;
-      min-height: 60px;
+    }
+    .Rank>div>div:nth-child(2){
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 80px;
+    }
+    .Rank:first-child{
+      margin-top: 40px;
+    }
+    .Rank:first-child>div>div:nth-child(2){
+      height: 30px !important;
     }
     .Rank>div>div {
       display: flex;
@@ -81,12 +94,13 @@ const Rank = (props) => {
 
   return (
     <>
-      <Topmenu nowPage='Rank'/>
       <RankWrapper>
         <div className="Rank">
           <div id="first">
             <div className="Team_Rank"></div>
-            <div className="Team_Logo"></div>
+            <div>
+              <div className="Team_Logo"></div>
+            </div>
             <div>
               <div>
                 <div>팀 이름</div>
@@ -105,7 +119,9 @@ const Rank = (props) => {
                 <div className="Rank">
                   <div>
                     <div className="Team_Rank">{ team.rank }</div>
-                    <img className="Team_Logo" src={ getImage(team.name) } alt={ team.name }/>
+                    <div>
+                      <img className="Team_Logo" src={ getImage(team.name) } alt={ team.name }/>
+                    </div>
                     <div>
                       <div>
                         <div>{ team.name }</div>     

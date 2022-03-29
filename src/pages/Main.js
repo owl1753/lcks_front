@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Topmenu from '../components/Topmenu';
 
 const MainWrapper = styled.div`
+  & {
+    padding-top: 80px;
+  }
+
   .Main {
     font-family: 'S-CoreDream-9Black';
   }
@@ -68,7 +71,6 @@ const MainWrapper = styled.div`
 const Main = () => {
   return (
     <>
-      <Topmenu nowPage='Main'/>
       <MainWrapper>
         <div className="Main">
           <span>LCKS</span>
