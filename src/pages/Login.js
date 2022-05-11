@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginWrapper = styled.div`
     &{
@@ -67,21 +69,61 @@ const LoginWrapper = styled.div`
 `
 
 const Login = (props) => {
+    const navigate = useNavigate();
+
+    const [userAccount, setUserAccount] = useState(
+        {
+            id: '',
+            password: '',
+        }
+    );
+    const [loginFailed, setLoginFailed] = useState(false);
+
+    const changeAccount = (e) => {
+        setUserAccount({
+            ...userAccount,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const users = [
+        {
+            id: '1',
+            password: '1',
+        }, 
+        {
+            id: '2',
+            password: '2',
+        }, 
+        {
+            id: '3',
+            password: '3',
+        }
+    ]
+
+    const checkUserAccount = () => {
+        for (let i = 0; i < users.length; i++){
+            if (users[i].id == userAccount.id && users[i].password == userAccount.password){
+                navigate('/');
+            }
+        }
+        console.log("로그인 실패");
+    }
+
     return (
-        
         <LoginWrapper>
             <div className="LoginBox">
                 <div>
                     <div>아이디</div>
-                    <input type="text" spellCheck={ false }/>
+                    <input onChange={changeAccount} type="text" spellCheck={ false } name="id"/>
                 </div>
                 <div>   
                     <div>비밀번호</div>
-                    <input type="password"/>
+                    <input onChange={changeAccount} type="password" name="password"/>
                 </div>
                 <div>
                     <div>
-                        <button>로그인</button>
+                        <button onClick={checkUserAccount}>로그인</button>
                         <button>회원가입</button>
                     </div>
                 </div>
