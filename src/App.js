@@ -4,6 +4,7 @@ import History from './pages/History';
 import Rank from './pages/Rank';
 import Info from './pages/Info';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import { Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
@@ -130,8 +131,10 @@ function App() {
   return (
     <div className="App">
       <GlobalStyle />
+      
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login /> }/>
+        <Route path="/signup" element={<SignUp /> }/>
         <Route path="/*" element={<Topmenu />}>
           <Route path='' element={<Main />} />
           <Route path='history' element={<History matches={ matches } teams={ teams }/>} />

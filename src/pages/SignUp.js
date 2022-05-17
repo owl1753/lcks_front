@@ -1,13 +1,12 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
-const LoginWrapper = styled.div`
+const SignUpWrapper = styled.div`
     &{
         color: #E8E8E8;
         font-size: 20px;
     }
-    .LoginBox{
+    .SignUpBox{
         position: absolute;
         top: 50%;
         left: 50%;
@@ -18,31 +17,31 @@ const LoginWrapper = styled.div`
         padding-right: 2em;
         border: 4px solid #E8E8E8;
     }
-    .LoginBox>div:not(:last-child){
+    .SignUpBox>div:not(:last-child){
         margin-bottom: 2em;
     }
-    .LoginBox>div:not(:last-child)>div{
+    .SignUpBox>div:not(:last-child)>div{
         padding-left: 5px;
         padding-bottom: 5px;
     }
-    .LoginBox>div>input{
+    .SignUpBox>div>input{
         border: 0px;
         width: 300px;
         height: 30px;
         font-size: 22px;
     }
-    .LoginBox>div>input:focus{
+    .SignUpBox>div>input:focus{
         outline: none;
     }
-    .LoginBox>div:last-child{
+    .SignUpBox>div:last-child{
         display: flex;
         justify-content: flex-end;
     }
-    .LoginBox>div:last-child{
+    .SignUpBox>div:last-child{
         display: flex;
         justify-content: center;
     }
-    .LoginBox>div:last-child>div{
+    .SignUpBox>div:last-child>div{
         display: flex;
         padding-bottom: 1.5em;
     }
@@ -70,39 +69,31 @@ const LoginWrapper = styled.div`
     }
 `
 
-const Login = (props) => {
-    const [account, setAccount] = useState({
-        id: "",
-        password: "",
-    });
-
-    const onChangeAccount = (e) => {
-        setAccount({
-            ...account,
-            [e.target.name]: e.target.value,
-        });
-    };
-
+const SignUp = (props) => {
     return (
-        <LoginWrapper>
-            <div className="LoginBox">
+        <SignUpWrapper>
+            <div className="SignUpBox">
                 <div>
                     <div>아이디</div>
-                    <input name="id" type="text" spellCheck={ false } onChange={ onChangeAccount }/>
+                    <input type="text" spellCheck={ false }/>
                 </div>
                 <div>   
                     <div>비밀번호</div>
-                    <input name="password" type="password" onChange={ onChangeAccount }/>
+                    <input type="password"/>
+                </div>
+                <div>   
+                    <div>비밀번호 확인</div>
+                    <input type="password"/>
                 </div>
                 <div>
                     <div>
-                        <button className="Button">로그인</button>
-                        <Link className="Link" to="/signup"><button className="Button">회원가입하기</button></Link>
+                        <button className="Button">회원가입</button>
+                        <Link className="Link" to="/login"><button className="Button">로그인하기</button></Link>
                     </div>
                 </div>
             </div>
-        </LoginWrapper>
+        </SignUpWrapper>
     )
 }
 
-export default Login;
+export default SignUp;
