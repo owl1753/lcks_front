@@ -1,3 +1,4 @@
+import { click } from '@testing-library/user-event/dist/click';
 import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -28,13 +29,19 @@ const TopmenuWrapper = styled.div`
         color: #E8E8E8;
         width: 100%;
     }
-    .topmenu>div>div>a:hover{
+    .Link:hover{
         color: #4169E1 !important;
+        cursor: pointer;
     }
 `
 
 const Topmenu = (props) => {
     const nowPage = useLocation();
+
+    const clickLogOut = () => {
+        props.setLogined(false);
+        props.setAccounts([]);
+    }
 
     return (
         <>
@@ -56,7 +63,13 @@ const Topmenu = (props) => {
                     </div>
                     <div>
                         <div>
-                            <Link to="/login" className="Link">로그인</Link>
+                            { !props.logined && <Link to="/login" className="Link">로그인</Link> }
+                            { props.logined && 
+                                <>
+                                    <div className="Link" onClick={clickLogOut}>로그아웃</div> 
+                                    <div>{ props.accounts.name }</div>
+                                </>
+                            }
                         </div>
                     </div>
                 </div>

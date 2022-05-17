@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const LoginWrapper = styled.div`
     &{
@@ -71,24 +73,39 @@ const LoginWrapper = styled.div`
 `
 
 const Login = (props) => {
-    const [account, setAccount] = useState({
-        id: "",
-        password: "",
-    });
+    const navigate = useNavigate();
+
+    const [userAccount, setUserAccount] = useState(
+        {
+            email: '',
+            password: '',
+        }
+    );
 
     const onChangeAccount = (e) => {
-        setAccount({
-            ...account,
+        setUserAccount({
+            ...userAccount,
             [e.target.name]: e.target.value,
         });
     };
+
+    const fetchLogin = async () => {
+        await axios.post('/accounts/login/', userAccount)
+        .then((response) => {
+            props.setAccounts(response.data);
+            props.setLogined(true);
+            navigate('/')
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     return (
         <LoginWrapper>
             <div className="LoginBox">
                 <div>
-                    <div>아이디</div>
-                    <input name="id" type="text" spellCheck={ false } onChange={ onChangeAccount }/>
+                    <div>이메일</div>
+                    <input name="email" type="text" spellCheck={ false } onChange={ onChangeAccount }/>
                 </div>
                 <div>   
                     <div>비밀번호</div>
@@ -96,7 +113,7 @@ const Login = (props) => {
                 </div>
                 <div>
                     <div>
-                        <button className="Button">로그인</button>
+                        <button className="Button" onClick={ fetchLogin }>로그인</button>
                         <Link className="Link" to="/signup"><button className="Button">회원가입하기</button></Link>
                     </div>
                 </div>
