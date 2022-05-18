@@ -20,18 +20,22 @@ const TopmenuWrapper = styled.div`
         display: flex;
     }
     .topmenu>div>div{
-        width: 100px;
+        min-width: 100px;
     }
-    .Link{
+    .topmenu-item{
         display: flex;
         justify-content: center;
         line-height: 86px;
         color: #E8E8E8;
         width: 100%;
     }
-    .Link:hover{
+    .topmenu-item:hover{
         color: #4169E1 !important;
         cursor: pointer;
+    }
+    #user-name:hover{
+        color: #E8E8E8 !important;
+        cursor: auto;
     }
 `
 
@@ -49,28 +53,34 @@ const Topmenu = (props) => {
                 <div className="topmenu">
                     <div>
                         <div>
-                            <Link to="/" className="Link" style={{color: '/' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>메인</Link>
+                            <Link to="/" className="topmenu-item" style={{color: '/' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>메인</Link>
                         </div>
                         <div>
-                            <Link to="/history" className="Link"  style={{color: '/history' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>경기 기록</Link>
+                            <Link to="/history" className="topmenu-item"  style={{color: '/history' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>경기 기록</Link>
                         </div>
                         <div>
-                            <Link to="/rank" className="Link"  style={{color: '/rank' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>순위</Link>
+                            <Link to="/rank" className="topmenu-item"  style={{color: '/rank' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>순위</Link>
                         </div>
                         <div>
-                            <Link to="/info" className="Link"  style={{color: '/info' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>팀별 정보</Link>
+                            <Link to="/info" className="topmenu-item"  style={{color: '/info' === nowPage.pathname ? '#4169E1' : '#E8E8E8'}}>팀별 정보</Link>
                         </div>
                     </div>
                     <div>
-                        <div>
-                            { !props.logined && <Link to="/login" className="Link">로그인</Link> }
-                            { props.logined && 
-                                <>
-                                    <div className="Link" onClick={clickLogOut}>로그아웃</div> 
-                                    <div>{ props.accounts.name }</div>
-                                </>
-                            }
-                        </div>
+                        { !props.logined && 
+                            <div>
+                                <Link to="/login" className="topmenu-item">로그인</Link>
+                            </div>
+                        }
+                        { props.logined && 
+                            <>
+                                <div>
+                                    <div className="topmenu-item" id="user-name">{ props.accounts.name }</div>
+                                </div>
+                                <div>
+                                    <div className="topmenu-item" onClick={clickLogOut}>로그아웃</div> 
+                                </div>
+                            </> 
+                        }
                     </div>
                 </div>
             </TopmenuWrapper>
