@@ -116,7 +116,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [matches, setMatches] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccount] = useState([]);
   const [logined, setLogined] = useState(false);
 
   const fetchData = async () => {
@@ -126,8 +126,20 @@ function App() {
     setTeams(response2.data);
   };
 
+  const getStrogeAccount = async () => {
+    const account = await sessionStorage.getItem("userAccount");
+    if (account !== null){
+      setAccount(JSON.parse(account));
+      setLogined(true);
+    }
+  }
+
   useEffect(() => {
     fetchData();
+  }, [])
+
+  useEffect(() => {
+    getStrogeAccount();
   }, [])
 
   return (
@@ -135,9 +147,9 @@ function App() {
       <GlobalStyle />
       
       <Routes>
-        <Route path="/login" element={<Login setAccounts={ setAccounts } setLogined={ setLogined }/> }/>
+        <Route path="/login" element={<Login setAccount={ setAccount } setLogined={ setLogined }/> }/>
         <Route path="/signup" element={<SignUp /> }/>
-        <Route path="/*" element={<Topmenu logined={ logined } accounts={ accounts } setLogined={ setLogined } setAccounts={ setAccounts }/>}>
+        <Route path="/*" element={<Topmenu logined={ logined } accounts={ accounts } setLogined={ setLogined } setAccount={ setAccount }/>}>
           <Route path='' element={<Main />} />
           <Route path='history' element={<History matches={ matches } teams={ teams }/>} />
           <Route path='rank' element={<Rank teams={ teams }/>} />

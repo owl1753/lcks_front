@@ -92,8 +92,9 @@ const Login = (props) => {
     const fetchLogin = async () => {
         await axios.post('/accounts/login/', userAccount)
         .then((response) => {
-            props.setAccounts(response.data);
+            props.setAccount(response.data);
             props.setLogined(true);
+            sessionStorage.setItem("userAccount", JSON.stringify(response.data));
             navigate('/')
         }).catch((error) => {
             console.log(error);
