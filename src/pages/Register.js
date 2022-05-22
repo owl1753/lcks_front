@@ -1,15 +1,15 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const LoginWrapper = styled.div`
+const RegisterWrapper = styled.div`
     &{
         color: #E8E8E8;
         font-size: 20px;
     }
-    .LoginBox{
+    .RegisterBox{
         position: absolute;
         top: 50%;
         left: 50%;
@@ -20,14 +20,14 @@ const LoginWrapper = styled.div`
         padding-right: 2em;
         border: 4px solid #E8E8E8;
     }
-    .LoginBox>div:not(:last-child){
+    .RegisterBox>div:not(:last-child){
         margin-bottom: 2em;
     }
-    .LoginBox>div:not(:last-child)>div{
+    .RegisterBox>div:not(:last-child)>div{
         padding-left: 5px;
         padding-bottom: 5px;
     }
-    .LoginBox>div>input{
+    .RegisterBox>div>input{
         border: 0px;
         width: 300px;
         height: 30px;
@@ -37,18 +37,18 @@ const LoginWrapper = styled.div`
         -ms-user-select:text; 
         user-select:text
     }
-    .LoginBox>div>input:focus{
+    .RegisterBox>div>input:focus{
         outline: none;
     }
-    .LoginBox>div:last-child{
+    .RegisterBox>div:last-child{
         display: flex;
         justify-content: flex-end;
     }
-    .LoginBox>div:last-child{
+    .RegisterBox>div:last-child{
         display: flex;
         justify-content: center;
     }
-    .LoginBox>div:last-child>div{
+    .RegisterBox>div:last-child>div{
         display: flex;
         padding-bottom: 1.5em;
     }
@@ -80,59 +80,69 @@ const LoginWrapper = styled.div`
     }
 `
 
-const Login = (props) => {
-    const navigate = useNavigate();
-
+const Register = (props) => {
     const [userAccount, setUserAccount] = useState(
         {
             email: '',
+            name: '',
             password: '',
+            re_password: '',
         }
     );
 
     const [error, setErorr] = useState('');
+
+    const navigate = useNavigate();
 
     const onChangeAccount = (e) => {
         setUserAccount({
             ...userAccount,
             [e.target.name]: e.target.value,
         });
-    };
+    }
 
-    const fetchLogin = async () => {
-        await axios.post('/accounts/login/', userAccount)
+    const fetchRegister = async () => {
+        await axios.post('/accounts/register/', userAccount)
         .then((response) => {
             props.setAccount(response.data);
             props.setLogined(true);
             sessionStorage.setItem("userAccount", JSON.stringify(response.data));
             navigate('/')
-        }).catch((e) => {
-            setErorr(e);
+        }).catch((error) => {
+            setErorr(error);
         });
     }
 
     return (
-        <LoginWrapper>
-            <div className="LoginBox">
+        <RegisterWrapper>
+            <div className="RegisterBox">
                 <div>
                     <div>이메일</div>
                     <input name="email" type="email" spellCheck={ false } onChange={ onChangeAccount }/>
-                    { error !== '' && <div className="error-message">해당 이메일로 가입한 계정이 없습니다.</div>}
+                    { error !== '' && <div className="error-message">해당 이메일로 가입한 계정이 이미 있습니다.</div>}
+                </div>
+                <div>
+                    <div>닉네임</div>
+                    <input name="name" type="text" spellCheck={ false } onChange={ onChangeAccount }/>
                 </div>
                 <div>   
                     <div>비밀번호</div>
                     <input name="password" type="password" onChange={ onChangeAccount }/>
-                    { error !== '' && <div className="error-message">비밀번호가 틀렸습니다.</div>}
+                </div>
+                <div>   
+                    <div>비밀번호 확인</div>
+                    <input name="re_password" type="password" onChange={ onChangeAccount }/>
+                    { error !== '' && <div className="error-message">위에 입력한 비밀번호와 같지 않습니다.</div>}
                 </div>
                 <div>
                     <div>
-                        <button className="Button" onClick={ fetchLogin }>로그인</button>
-                        <Link className="Link" to="/register"><button className="Button">회원가입하기</button></Link>
+                        <button className="Button" onClick={ fetchRegister }>회원가입</button>
+                        <Link className="Link" to="/login"><button className="Button">로그인하기</button></Link>
                     </div>
                 </div>
             </div>
-        </LoginWrapper>
+        </RegisterWrapper>
     )
 }
 
-export default Login;
+export default Register;

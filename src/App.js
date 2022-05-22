@@ -4,7 +4,7 @@ import History from './pages/History';
 import Rank from './pages/Rank';
 import Info from './pages/Info';
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import Register from './pages/Register';
 import { Route, Routes } from 'react-router-dom'
 import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
@@ -148,7 +148,7 @@ function App() {
       
       <Routes>
         <Route path="/login" element={<Login setAccount={ setAccount } setLogined={ setLogined }/> }/>
-        <Route path="/signup" element={<SignUp /> }/>
+        <Route path="/register" element={<Register setAccount={ setAccount } setLogined={ setLogined }/> }/>
         <Route path="/*" element={<Topmenu logined={ logined } accounts={ accounts } setLogined={ setLogined } setAccount={ setAccount }/>}>
           <Route path='' element={<Main />} />
           <Route path='history' element={<History matches={ matches } teams={ teams }/>} />
