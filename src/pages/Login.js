@@ -107,7 +107,7 @@ const Login = (props) => {
             sessionStorage.setItem("userAccount", JSON.stringify(response.data));
             navigate('/')
         }).catch((e) => {
-            setErorr(e);
+            setErorr(e.response.data.message);
         });
     }
 
@@ -117,12 +117,12 @@ const Login = (props) => {
                 <div>
                     <div>이메일</div>
                     <input name="email" type="email" spellCheck={ false } onChange={ onChangeAccount }/>
-                    { error !== '' && <div className="error-message">해당 이메일로 가입한 계정이 없습니다.</div>}
+                    { error === 'EmailDoesNotExist' && <div className="error-message">해당 이메일로 가입한 계정이 없습니다.</div>}
                 </div>
                 <div>   
                     <div>비밀번호</div>
                     <input name="password" type="password" onChange={ onChangeAccount }/>
-                    { error !== '' && <div className="error-message">비밀번호가 틀렸습니다.</div>}
+                    { error === 'PassWordIsIncorrect' && <div className="error-message">비밀번호가 틀렸습니다.</div>}
                 </div>
                 <div>
                     <div>
