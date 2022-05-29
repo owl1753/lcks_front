@@ -90,7 +90,14 @@ const Register = (props) => {
         }
     );
 
-    const [error, setErorr] = useState('');
+    const [error, setError] = useState(
+        {
+            email: '',
+            name: '',
+            password: '',
+            re_password: '',
+        }
+    );
 
     const navigate = useNavigate();
 
@@ -109,7 +116,7 @@ const Register = (props) => {
             sessionStorage.setItem("userAccount", JSON.stringify(response.data));
             navigate('/')
         }).catch((e) => {
-            setErorr(e.response.data.message);
+            setError(e.response.data);
         });
     }
 
@@ -119,20 +126,22 @@ const Register = (props) => {
                 <div>
                     <div>이메일</div>
                     <input name="email" type="email" spellCheck={ false } onChange={ onChangeAccount }/>
-                    { error === 'EmailAlreadyExist' && <div className="error-message">해당 이메일로 가입한 계정이 이미 있습니다.</div>}
+                    { error.email !== '' && <div className="error-message">{ error.email }</div>}
                 </div>
                 <div>
                     <div>닉네임</div>
                     <input name="name" type="text" spellCheck={ false } onChange={ onChangeAccount }/>
+                    { error.name !== '' && <div className="error-message">{ error.name }</div>}
                 </div>
                 <div>   
                     <div>비밀번호</div>
                     <input name="password" type="password" onChange={ onChangeAccount }/>
+                    { error.password !== '' && <div className="error-message">{ error.password }</div>}
                 </div>
                 <div>   
                     <div>비밀번호 확인</div>
                     <input name="re_password" type="password" onChange={ onChangeAccount }/>
-                    { error === 'PasswordIsNotSame' && <div className="error-message">위에 입력한 비밀번호와 같지 않습니다.</div>}
+                    { error.re_password !== '' && <div className="error-message">{ error.re_password }</div>}
                 </div>
                 <div>
                     <div>

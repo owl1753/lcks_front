@@ -90,7 +90,12 @@ const Login = (props) => {
         }
     );
 
-    const [error, setErorr] = useState('');
+    const [error, setError] = useState(
+        {
+            email: '',
+            password: '',
+        }
+    );
 
     const onChangeAccount = (e) => {
         setUserAccount({
@@ -107,7 +112,7 @@ const Login = (props) => {
             sessionStorage.setItem("userAccount", JSON.stringify(response.data));
             navigate('/')
         }).catch((e) => {
-            setErorr(e.response.data.message);
+            setError(e.response.data);
         });
     }
 
@@ -117,12 +122,12 @@ const Login = (props) => {
                 <div>
                     <div>이메일</div>
                     <input name="email" type="email" spellCheck={ false } onChange={ onChangeAccount }/>
-                    { error === 'EmailDoesNotExist' && <div className="error-message">해당 이메일로 가입한 계정이 없습니다.</div>}
+                    { error.email !== '' && <div className="error-message">{ error.email }</div>}
                 </div>
                 <div>   
                     <div>비밀번호</div>
                     <input name="password" type="password" onChange={ onChangeAccount }/>
-                    { error === 'PassWordIsIncorrect' && <div className="error-message">비밀번호가 틀렸습니다.</div>}
+                    { error.password !== '' && <div className="error-message">{ error.password }</div>}
                 </div>
                 <div>
                     <div>
