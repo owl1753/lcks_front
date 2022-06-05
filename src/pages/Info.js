@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InfoContents from '../components/InfoContents';
+import TeamComments from '../components/TeamComments';
 
 const InfoWrapper = styled.div`
     & {
@@ -71,6 +72,7 @@ const Info = (props) => {
                 </div>
             </InfoWrapper>
             <InfoContents team={ nowTeam }/>
+            <TeamComments />
         </>
     )
 }
