@@ -42,8 +42,11 @@ const TeamCommentsWrapper = styled.div`
         -webkit-user-select:text; 
         -moz-user-select:text; 
         -ms-user-select:text; 
-        user-select:text
+        user-select:text;
     }
+    .Comment-content>textarea:focus {
+        outline: none;
+      }
     .Comment-content>div {
         display: flex;
         width: 65px;
@@ -63,6 +66,19 @@ const TeamCommentsWrapper = styled.div`
 `
 
 const TeamComments = (props) => {
+    
+
+    const [commentInfo, setCommentInfo] = useState(
+        {
+            author_email : '',
+            comment: '',
+        }
+    );
+
+    const [comments, setComments] = useState([]);
+
+    const [filterComments, setFilterComments] = useState([]);
+
     return (
         <TeamCommentsWrapper>
             <div className="Comment-box">
@@ -72,7 +88,7 @@ const TeamComments = (props) => {
                 <div className="Comment-content">
                     <textarea className>
                     </textarea>
-                    <div>
+                    <div >
                         등록
                     </div>
                 </div>
