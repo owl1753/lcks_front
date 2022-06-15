@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const TeamCommentsWrapper = styled.div`
     & {
@@ -8,6 +9,7 @@ const TeamCommentsWrapper = styled.div`
         align-items: center;
     }
     .Comment-box {
+        
         border: 0.5px solid #E8E8E8;
         background-color: #0D0D0D;
         width: 50%;
@@ -63,44 +65,99 @@ const TeamCommentsWrapper = styled.div`
         color: #0D0D0D;
         border: 2px solid #0D0D0D;
     }
+    .Comment-warning {
+        display: flex;
+        justify-content: center;
+        color: #E8E8E8;
+        font-size: 20px;
+        padding-top: 5%;
+        padding-bottom: 4%;
+    }
+    .Blank{
+        bottom: 0;
+        width: 100vw;
+        height: 90px;
+    }
 `
 
 const TeamComments = (props) => {
-    
-
-    const [commentInfo, setCommentInfo] = useState(
-        {
-            author_email : '',
-            comment: '',
-        }
-    );
-
+    const textFieldRef = useRef(null);
+    const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState([]);
 
-    const [filterComments, setFilterComments] = useState([]);
+    const getComments = async () => {
+        const response = await axios.get('/api/comment/');
+        const tempArray = [];
+
+        for (let i = 1; i <= response.data.length; i++) {
+            if (response.data[response.data.length - i].team_name === props.team_name){
+                tempArray.push(response.data[response.data.length - i])
+            }
+        }
+        setComments(tempArray);
+        textFieldRef.current.value = "";
+        setNewComment('');
+      };
+
+    useEffect(() => {
+        getComments();
+        
+    }, [props.team_name])
+
+    const onChangeNewComment = (e) => {
+        setNewComment(e.target.value);
+    }
+
+    const AddComment = async () => {
+        if (newComment === ''){
+            return;
+        }
+
+        const temp = {
+            'author_email': props.accounts.email,
+            'team_name': props.team_name,
+            'contents': newComment,
+        };
+        await axios.post('/api/addComment/', temp);
+        getComments();
+
+    }
 
     return (
         <TeamCommentsWrapper>
             <div className="Comment-box">
-                <div className="Comment-author">
-                    블루드래곤
-                </div>
-                <div className="Comment-content">
-                    <textarea className>
-                    </textarea>
-                    <div >
-                        등록
-                    </div>
-                </div>
+                { typeof props.accounts.name !== 'undefined' && 
+                    <>
+                        <div className="Comment-author">
+                            { props.accounts.name } &#40;{ props.accounts.email }&#41;
+                        </div>
+                        <div className="Comment-content">
+                            <textarea ref={ textFieldRef }onChange={ onChangeNewComment }>
+                            </textarea>
+                            <div onClick={ AddComment }>
+                                등록
+                            </div>
+                        </div>
+                    </>
+                }
+                { typeof props.accounts.name === 'undefined' && <div className="Comment-warning">댓글 작성은 로그인 후 가능합니다</div>}
             </div>
-            <div className="Comment-box">
-                <div className="Comment-author">
-                    전능하신아카라트여영원한빛으로날보호하소서
-                </div>
-                <div className="Comment-content">
-                    전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서전능하신아카라트여영원한빛으로날보호하소서
-                </div>
-            </div>
+            {
+                comments.map((comment) => {
+                    return (
+                        <div className="Comment-box">
+                            <div className="Comment-author">
+                                { comment.author_name } &#40;{ comment.author_email }&#41;
+                            </div>
+                            <div className="Comment-content">
+                                { comment.contents }
+                            </div>
+                        </div>
+                    )
+                })
+            }
+            <div className="Blank"></div>
+            
         </TeamCommentsWrapper>
     )
 }

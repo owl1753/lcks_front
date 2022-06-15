@@ -153,7 +153,7 @@ function App() {
           <Route path='' element={<Main />} />
           <Route path='history' element={<History matches={ matches } teams={ teams }/>} />
           <Route path='rank' element={<Rank teams={ teams }/>} />
-          <Route path='info' element={<Info teams={ teams }/>} />
+          <Route path='info' element={<Info teams={ teams } accounts={ accounts }/>} />
         </Route>
       </Routes>
     </div>

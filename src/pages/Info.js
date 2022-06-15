@@ -40,14 +40,17 @@ const Info = (props) => {
     const [nowTeam, setNowTeam] = useState({});
 
     useEffect(() => {
+        console.log(nowTeam)
         if (typeof props.teams === 'undefined' || props.teams === null){
             return;
         }
         if (props.teams.length === 0){
             return;
         }
-        const team = props.teams[0];
-        setNowTeam(team);
+        if (Object.keys(nowTeam).length === 0){
+            const team = props.teams[0];
+            setNowTeam(team);
+        }
       }, [props])
 
     return (
@@ -72,7 +75,7 @@ const Info = (props) => {
                 </div>
             </InfoWrapper>
             <InfoContents team={ nowTeam }/>
-            <TeamComments />
+            <TeamComments team_name={ nowTeam.name } accounts={ props.accounts }/>
         </>
     )
 }
