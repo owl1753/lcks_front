@@ -35,7 +35,7 @@ const TeamCommentsWrapper = styled.div`
     .Comment-content>textarea {
         width: 90.5%;
         height: 60px;
-        font-size: 17px;
+        font-size: 18px;
         border: none;
         resize: none;
         font-family: 'OTWelcomeBA';
